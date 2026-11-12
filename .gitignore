@@ -1,0 +1,6 @@
+.DS_Store
+*.pem
+*.crx
+node_modules/
+docs/
+CLAUDE.md

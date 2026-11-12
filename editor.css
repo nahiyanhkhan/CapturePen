@@ -1,0 +1,306 @@
+:root {
+  --accent: #635bff;
+  --accent-dark: #4c45d1;
+  --bg: #f6f6fb;
+  --panel: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b7280;
+  --border: #e6e6ef;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text);
+}
+.brand img { width: 22px; height: 22px; }
+
+.tools {
+  display: flex;
+  gap: 4px;
+  background: #f1f1f7;
+  padding: 4px;
+  border-radius: 10px;
+}
+
+.tool-btn {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+}
+.tool-btn:hover { background: #e5e5f0; color: var(--text); }
+.tool-btn.active { background: var(--accent); color: white; }
+.tool-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+.spacer { flex: 1; }
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: #f1f1f7;
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icon-btn:hover:not(:disabled) { background: #e5e5f0; color: var(--accent); }
+.icon-btn:disabled { opacity: 0.35; cursor: default; background: transparent; }
+
+.divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.pill-btn {
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--text);
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pill-btn:hover { background: #f6f6fb; }
+.pill-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
+.pill-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+.pill-btn.primary:hover { background: var(--accent-dark); }
+.pill-btn.danger {
+  background: #fdecec;
+  border-color: #f8d0d0;
+  color: #d93036;
+  margin-right: 6px;
+}
+.pill-btn.danger:hover { background: #fbdcdc; border-color: #f3b9b9; }
+.pill-btn.small { padding: 5px 12px; font-size: 12px; }
+.pill-btn.ghost { background: transparent; }
+
+#subbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 8px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sub-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sub-label {
+  font-size: 11.5px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-right: 2px;
+}
+
+.swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+.swatch.active { border-color: var(--text); box-shadow: 0 0 0 2px white inset; }
+.swatch:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+#sizeRange { width: 110px; }
+
+#canvasWrap {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 30px;
+  position: relative;
+}
+
+#mainCanvas {
+  background: white;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+  border-radius: 4px;
+  cursor: crosshair;
+  -webkit-user-drag: none;
+  user-select: none;
+  touch-action: none;
+}
+
+#textInputOverlay {
+  position: absolute;
+  z-index: 10;
+  outline: 1px dotted #635bff; /* outside the box so text origin == box x/y */
+}
+#textInput {
+  display: block;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  scrollbar-width: none; /* a scrollbar would narrow the wrap vs the canvas */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  font-family: -apple-system, sans-serif;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.tb-handle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  background: #fff;
+  border: 1px solid #635bff;
+  box-sizing: border-box;
+  touch-action: none;
+}
+@media (pointer: coarse) {
+  .tb-handle { width: 20px; height: 20px; margin: -10px 0 0 -10px; }
+}
+.tb-nw { left: 0; top: 0; cursor: nwse-resize; }
+.tb-n { left: 50%; top: 0; cursor: ns-resize; }
+.tb-ne { left: 100%; top: 0; cursor: nesw-resize; }
+.tb-e { left: 100%; top: 50%; cursor: ew-resize; }
+.tb-se { left: 100%; top: 100%; cursor: nwse-resize; }
+.tb-s { left: 50%; top: 100%; cursor: ns-resize; }
+.tb-sw { left: 0; top: 100%; cursor: nesw-resize; }
+.tb-w { left: 0; top: 50%; cursor: ew-resize; }
+
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #1a1a2e;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Clear all: the button pulses red when it clears. */
+@keyframes clear-pulse {
+  0%   { transform: scale(1);    box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.5); background: #f7c4c4; }
+  40%  { transform: scale(0.94); }
+  100% { transform: scale(1);    box-shadow: 0 0 0 10px rgba(229, 72, 77, 0); }
+}
+.pill-btn.danger.pulse { animation: clear-pulse 0.45s ease-out; }
+.pill-btn.danger:active { transform: scale(0.95); }
+@media (prefers-reduced-motion: reduce) {
+  .pill-btn.danger.pulse { animation-duration: 0.01s; }
+}
+
+/* Empty editor: paste / drop / open an image */
+#emptyState {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+  margin: auto; padding: 44px 52px; text-align: center;
+  border: 2px dashed #c9ccd6; border-radius: 14px; color: #444;
+  font-family: -apple-system, sans-serif; max-width: 460px;
+}
+#emptyState .empty-title { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+#emptyState .empty-hint, #emptyState .empty-tip { font-size: 13px; line-height: 2; }
+#emptyState .empty-tip { color: #777; margin-top: 8px; }
+#emptyState kbd {
+  font-family: inherit; font-size: 12px; padding: 1px 6px;
+  border: 1px solid #ccc; border-bottom-width: 2px; border-radius: 4px; background: #fff;
+}
+#canvasWrap.dropping { outline: 3px dashed #4f7cff; outline-offset: -12px; }
+
+/* Keyboard shortcuts panel */
+#helpOverlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(20, 20, 40, 0.35);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+#helpPanel {
+  background: var(--panel); color: var(--text);
+  border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  padding: 20px 24px 22px; width: 640px; max-width: 100%;
+  max-height: calc(100vh - 32px); overflow: auto;
+}
+#helpPanel .help-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+#helpPanel h2 { margin: 0; font-size: 17px; }
+#helpPanel .help-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+@media (max-width: 600px) { #helpPanel .help-cols { grid-template-columns: 1fr; } }
+#helpPanel h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 14px 0 6px; }
+#helpPanel .sc-row {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  font-size: 13px; padding: 5px 0; border-bottom: 1px solid var(--border);
+}
+#helpPanel .keys { white-space: nowrap; color: var(--muted); font-size: 12px; }
+#helpPanel kbd {
+  font-family: inherit; font-size: 12px; color: var(--text);
+  padding: 1px 6px; border: 1px solid #ccc; border-bottom-width: 2px; border-radius: 4px; background: #fff;
+}
+#helpPanel .help-note { font-size: 12px; color: var(--muted); margin: 24px 0 0; line-height: 1.6; }

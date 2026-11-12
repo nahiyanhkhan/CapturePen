@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>CapturePen — Editor</title>
+<link rel="stylesheet" href="editor.css" />
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="brand">
+        <img src="icons/icon48.png" alt="" />
+        <span>CapturePen</span>
+      </div>
+
+      <div class="tools" id="toolGroup">
+        <button class="tool-btn" data-tool="select" title="Select / Move (V or S)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M4 4l7.07 17 2.51-7.39L21 11.07z" fill="currentColor"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="brush" title="Brush (B)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 114.03 4.03l-8.06 8.08M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 00-3-3.02z"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="line" title="Line (L)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 19L19 5"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="arrow" title="Arrow (A)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+        </button>
+        <button class="tool-btn active" data-tool="rect" title="Rectangle (R)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="ellipse" title="Ellipse (O)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="12" rx="9" ry="7"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="text" title="Text (T)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M12 6v14"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="crop" title="Crop (X)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2v14a2 2 0 002 2h14M18 22V8a2 2 0 00-2-2H2"/></svg>
+        </button>
+        <button class="tool-btn" data-tool="blur" title="Blur / Pixelate (P)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18" stroke-dasharray="2 2"/></svg>
+        </button>
+      </div>
+
+      <div class="spacer"></div>
+
+      <div class="actions">
+        <button id="openBtn" class="pill-btn" title="Open an image file (or paste one with Ctrl/Cmd+V)">Open</button>
+        <input type="file" id="fileInput" accept="image/*" hidden />
+        <button id="clearBtn" class="pill-btn danger" title="Clear all edits">Clear all</button>
+        <button id="undoBtn" class="icon-btn" title="Undo (Ctrl+Z)">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"/></svg>
+        </button>
+        <button id="redoBtn" class="icon-btn" title="Redo (Ctrl+Y)">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 15l6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3"/></svg>
+        </button>
+        <div class="divider"></div>
+        <button id="copyBtn" class="pill-btn" title="Copy (Ctrl+C)">Copy</button>
+        <button id="downloadBtn" class="pill-btn primary">Download</button>
+        <button id="helpBtn" class="icon-btn" title="Keyboard shortcuts (?)" aria-haspopup="dialog">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="0.6" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="subbar">
+      <div class="sub-group" id="colorGroup">
+        <span class="sub-label">Color</span>
+        <button class="swatch active" style="background:#ff3b30" data-color="#ff3b30"></button>
+        <button class="swatch" style="background:#ffcc00" data-color="#ffcc00"></button>
+        <button class="swatch" style="background:#34c759" data-color="#34c759"></button>
+        <button class="swatch" style="background:#0a84ff" data-color="#0a84ff"></button>
+        <button class="swatch" style="background:#635bff" data-color="#635bff"></button>
+        <button class="swatch" style="background:#1a1a2e" data-color="#1a1a2e"></button>
+        <button class="swatch" style="background:#ffffff;border:1px solid #ddd" data-color="#ffffff"></button>
+      </div>
+      <div class="sub-group">
+        <span class="sub-label">Stroke Size</span>
+        <input type="range" id="sizeRange" min="2" max="40" value="3" />
+      </div>
+      <div class="sub-group">
+        <span class="sub-label">Font Size</span>
+        <input type="range" id="fontSizeRange" min="8" max="120" value="16" />
+      </div>
+      <div class="sub-group" id="cropActions" style="display:none">
+        <button class="pill-btn small" id="applyCrop">Apply Crop</button>
+        <button class="pill-btn small ghost" id="cancelCrop">Cancel</button>
+      </div>
+    </div>
+
+    <div id="canvasWrap">
+      <canvas id="mainCanvas"></canvas>
+      <div id="emptyState" style="display:none">
+        <div class="empty-title">Paste a screenshot to edit it</div>
+        <div class="empty-hint">Press <kbd>Cmd/Ctrl</kbd> + <kbd>V</kbd>, drop an image here, or</div>
+        <button id="emptyOpenBtn" class="pill-btn primary">Choose a file</button>
+        <div class="empty-tip">Tip: on a Mac, <kbd>Cmd</kbd>+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>4</kbd> puts a screenshot straight on the clipboard.</div>
+      </div>
+      <div id="textInputOverlay" style="display:none">
+        <textarea id="textInput" placeholder="Type…" spellcheck="false"></textarea>
+        <div class="tb-handle tb-nw" data-dir="nw"></div>
+        <div class="tb-handle tb-n" data-dir="n"></div>
+        <div class="tb-handle tb-ne" data-dir="ne"></div>
+        <div class="tb-handle tb-e" data-dir="e"></div>
+        <div class="tb-handle tb-se" data-dir="se"></div>
+        <div class="tb-handle tb-s" data-dir="s"></div>
+        <div class="tb-handle tb-sw" data-dir="sw"></div>
+        <div class="tb-handle tb-w" data-dir="w"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="helpOverlay" style="display:none">
+    <div id="helpPanel" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="help-head">
+        <h2 id="helpTitle">Keyboard shortcuts</h2>
+        <button id="helpClose" class="icon-btn" title="Close (Esc)" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="help-cols">
+      <section>
+        <h3>Tools</h3>
+        <div class="sc-row"><span>Select / Move</span><span class="keys"><kbd>V</kbd> / <kbd>S</kbd></span></div>
+        <div class="sc-row"><span>Brush</span><span class="keys"><kbd>B</kbd></span></div>
+        <div class="sc-row"><span>Line</span><span class="keys"><kbd>L</kbd></span></div>
+        <div class="sc-row"><span>Arrow</span><span class="keys"><kbd>A</kbd></span></div>
+        <div class="sc-row"><span>Rectangle</span><span class="keys"><kbd>R</kbd></span></div>
+        <div class="sc-row"><span>Ellipse</span><span class="keys"><kbd>O</kbd></span></div>
+        <div class="sc-row"><span>Text</span><span class="keys"><kbd>T</kbd></span></div>
+        <div class="sc-row"><span>Crop</span><span class="keys"><kbd>X</kbd></span></div>
+        <div class="sc-row"><span>Blur / Pixelate</span><span class="keys"><kbd>P</kbd></span></div>
+        <p class="help-note">Double-click any text to edit it. Change capture keys at chrome://extensions/shortcuts.</p>
+      </section>
+      <section>
+        <h3>Editing</h3>
+        <div class="sc-row"><span>Undo</span><span class="keys"><kbd>Cmd/Ctrl</kbd>+<kbd>Z</kbd></span></div>
+        <div class="sc-row"><span>Redo</span><span class="keys"><kbd>Cmd/Ctrl</kbd>+<kbd>Y</kbd></span></div>
+        <div class="sc-row"><span>Copy image</span><span class="keys"><kbd>Cmd/Ctrl</kbd>+<kbd>C</kbd></span></div>
+        <div class="sc-row"><span>Paste an image</span><span class="keys"><kbd>Cmd/Ctrl</kbd>+<kbd>V</kbd></span></div>
+        <div class="sc-row"><span>Delete selected shape</span><span class="keys"><kbd>Delete</kbd></span></div>
+        <div class="sc-row"><span>Cancel crop / finish text</span><span class="keys"><kbd>Esc</kbd></span></div>
+        <div class="sc-row"><span>Hold to snap lines to 15°</span><span class="keys"><kbd>Shift</kbd></span></div>
+        <div class="sc-row"><span>Show this list</span><span class="keys"><kbd>?</kbd></span></div>
+        <h3>Capture (any tab)</h3>
+        <div class="sc-row"><span>Visible area</span><span class="keys"><kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd></span></div>
+        <div class="sc-row"><span>Select an area</span><span class="keys"><kbd>Option</kbd>+<kbd>Shift</kbd>+<kbd>A</kbd></span></div>
+      </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script src="editor.js"></script>
+</body>
+</html>

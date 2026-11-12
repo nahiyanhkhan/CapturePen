@@ -1,0 +1,40 @@
+{
+  "manifest_version": 3,
+  "name": "CapturePen — Screenshot, Crop & Annotate",
+  "version": "1.0.0",
+  "description": "Capture, crop, and mark up screenshots instantly. 100% local — no account, no cloud, no ads.",
+  "permissions": ["activeTab", "downloads", "storage", "scripting", "contextMenus", "clipboardRead"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "CapturePen — click to select an area, right-click for more options"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "capture-visible": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "Capture visible area"
+    },
+    "capture-area": {
+      "suggested_key": {
+        "default": "Alt+Shift+A",
+        "mac": "Alt+Shift+A"
+      },
+      "description": "Capture selected area"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
