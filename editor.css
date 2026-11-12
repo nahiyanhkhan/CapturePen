@@ -109,6 +109,16 @@ html, body {
   font-weight: 600;
   cursor: pointer;
 }
+/* Top-bar action buttons all share the 36px height of the icon buttons. */
+.actions .pill-btn {
+  height: 36px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+}
+.actions .pill-btn svg { flex-shrink: 0; }
 .pill-btn:hover { background: #f6f6fb; }
 .pill-btn:disabled { opacity: 0.4; cursor: default; pointer-events: none; }
 .pill-btn.primary {

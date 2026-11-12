@@ -9,7 +9,7 @@ A local-first Chrome extension: capture, crop, and mark up screenshots without a
 - **Visible area:** capture what's on screen in the current tab
 - **Full page:** scrolls and stitches the whole page into one image
 - **Edit a Mac screenshot (any app, full screen with the tab bar):** press `Cmd+Ctrl+Shift+3` (full screen) or `Cmd+Ctrl+Shift+4` (an area) to put a screenshot on the clipboard, then right-click the CapturePen icon > **Edit screenshot from clipboard**. It opens straight in the editor.
-- **Edit an image file:** right-click the icon > **Edit image from file** opens an empty editor; click **Choose a file** or drop an image. In the editor you can also paste (`Ctrl/Cmd+V`), drop, or **Open** an image in the editor at any time; pasting over an open image replaces it, and Undo brings the old one back.
+- **Edit an image file:** right-click the icon > **Edit image from file** opens an empty editor; click **Choose a file** or drop an image. In the editor you can also paste (`Ctrl/Cmd+V`), drop, or **Upload** an image in the editor at any time; pasting over an open image replaces it, and Undo brings the old one back.
 - The screenshot opens in a new editor tab
 
 ### Editor tools (toolbar order)
